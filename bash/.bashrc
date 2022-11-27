@@ -1,0 +1,189 @@
+#! /usr/bin/bash
+
+# :>
+# $$$$$$$\                      $$\                           
+# $$  __$$\                     $$ |                          
+# $$ |  $$ | $$$$$$\   $$$$$$$\ $$$$$$$\   $$$$$$\   $$$$$$$\ 
+# $$$$$$$\ | \____$$\ $$  _____|$$  __$$\ $$  __$$\ $$  _____|
+# $$  __$$\  $$$$$$$ |\$$$$$$\  $$ |  $$ |$$ |  \__|$$ /      
+# $$ |  $$ |$$  __$$ | \____$$\ $$ |  $$ |$$ |      $$ |      
+# $$$$$$$  |\$$$$$$$ |$$$$$$$  |$$ |  $$ |$$ |      \$$$$$$$\ 
+# \_______/  \_______|\_______/ \__|  \__|\__|       \_______|
+# :>                                         
+#                                                           
+#----------------------------------------------------
+# Author: Mirza Mahrab Hossain
+# Email	: mahrjose.dev@gmail.com
+# Github: https://github.com/mahrjose
+#----------------------------------------------------
+
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	 . /etc/bashrc
+fi
+
+# Enable bash programmable completion features in interactive shells
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+	. /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+	. /etc/bash_completion
+fi
+
+
+
+#######################################################
+# -------------------  EXPORTS  ----------------------#
+#######################################################
+
+iatest=$(expr index "$-" i) 
+
+# Add to PATH
+export PATH="/home/mahrjose/bin/Scripts:/var/lib/flatpak/exports/share:$PATH"
+
+# Disable the bell
+if [[ $iatest > 0 ]]; then bind "set bell-style visible"; fi
+
+# Expand the history size
+export HISTFILESIZE=10000
+export HISTSIZE=500
+
+# Don't put duplicate lines in the history and do not add lines that start with a space
+export HISTCONTROL=erasedups:ignoredups:ignorespace
+
+# Check the window size after each command and, if necessary, update the values of LINES and COLUMNS
+shopt -s checkwinsize
+
+# Causes bash to append to history instead of overwriting it so if you start a new terminal, you have old session history
+shopt -s histappend
+PROMPT_COMMAND='history -a'
+
+# Ignore case on auto-completion
+# Note: bind used instead of sticking these in .inputrc
+if [[ $iatest > 0 ]]; then bind "set completion-ignore-case on"; fi
+
+# Show auto-completion list automatically, without double tab
+if [[ $iatest > 0 ]]; then bind "set show-all-if-ambiguous On"; fi
+
+# Set the default editor
+# export EDITOR=vim
+# export VISUAL=vim
+# alias pico='edit'
+# alias spico='sedit'
+# alias nano='edit'
+# alias snano='sedit'
+
+# Color for manpages in less makes manpages a little easier to read
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+
+
+#######################################################
+# --------------	GENERAL ALIAS'S		--------------#
+#######################################################
+
+# To temporarily bypass an alias, we preceed the command with a \
+# For example: the ls command is aliased, but to use the normal ls 
+# command you would type \ls
+
+
+# Update System & Cleanup
+# Ubuntu
+alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt autoclean -y"
+
+
+# Add an "alert" alias for long running commands.  
+# Example: -> sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# alias to show the date
+alias da='date "+%Y-%m-%d %A %T %Z"'
+
+# Personal Scripts
+alias wtw?='WhatToWatch'
+alias toss!='toss'
+
+# Alias's to modified commands
+alias ls="ls --color=auto -p --group-directories-first"
+alias ll="ls -lah --color=auto -p"
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -iv'
+alias mkdir='mkdir -p'
+
+alias ping='ping -c 10'
+alias less='less -R'
+alias vi='vim'
+alias svi='sudo vim'
+
+
+# Change directory aliases
+alias home='cd ~'
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# cd into the old directory
+alias bd='cd "$OLDPWD"'
+
+
+
+#######################################################
+# --------------   SPECIAL FUNCTIONS	--------------#
+#######################################################
+
+# Create and go to the directory
+mkdirg () {
+	
+	mkdir -p $1
+	cd $1
+}
+
+# Move and go to the directory
+mvg () {
+	
+	if [ -d "$2" ];then
+		mv $1 $2 && cd $2
+	else
+		mv $1 $2
+	fi
+}
+
+# Copy and go the directory
+cpg () {
+	
+	if [ -d "$2" ];then
+		cp $1 $2 && cd $2
+	else
+		$1 $2
+	fi
+}
+
+
+
+#######################################################
+# ---------------   COMMAND PROMPT   -----------------#
+#######################################################
+
+# Greeter Section
+pfetch
+
+# Set Colors
+bold="\e[1m";
+green="\e[38;5;48m"
+orange="\e[38;5;208m"
+reset="\e[0m"
+
+# The Prompt will look like,
+# mahrjose ~/bin/Scripts
+# > 
+export PS1="\[${bold}\]\[${green}\u\]\[${reset}\] \[${orange}\w\]\[${reset}\] \n> ";
+
