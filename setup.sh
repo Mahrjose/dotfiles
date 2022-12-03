@@ -1,17 +1,14 @@
-#!/usr/bin/bash
+#!/usr/bin/sh
 
 mv() {
 
    command mv $1 $2 &> /dev/null
 }
 
-
 #change Directory Name
 mv "$HOME/dotfiles" "$HOME/.dotfiles"
 
-# Copy symlinksetup script to $HOME & execute
-cp $HOME/.dotfiles/bin/symlinkSetup.sh $HOME/symlinkSetup.sh
-chmod +x $HOME/symlinkSetup.sh
-./symlinkSetup.sh
+# Execute symlinksetup script
+chmod +x $HOME/.dotfiles/bin/symlinkSetup.sh
+$HOME/.dotfiles/bin/symlinkSetup.sh
 
-rm $HOME/symlinkSetup.sh
