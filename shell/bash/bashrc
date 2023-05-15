@@ -11,11 +11,11 @@
 # \_______/  \_______|\_______/ \__|  \__|\__|       \_______|
 # :>                                         
 #                                                           
-#----------------------------------------------------
-# Author: Mirza Mahrab Hossain
-# Email	: mahrjose.dev@gmail.com
-# Github: https://github.com/mahrjose
-#----------------------------------------------------
+#---------------------------------------------------#
+# Author: Mirza Mahrab Hossain                      #
+# Email	: mahrjose.dev@gmail.com                    #
+# Github: https://github.com/mahrjose               #
+#---------------------------------------------------#
 
 
 # Source global definitions
@@ -39,7 +39,7 @@ fi
 iatest=$(expr index "$-" i) 
 
 # Add to PATH
-export PATH="/home/mahrjose/bin/Scripts:/var/lib/flatpak/exports/share:$PATH"
+export PATH="/home/mahrjose/.local/bin:/home/mahrjose/.local/bin/xmonad:/home/mahrjose/bin/scripts:/var/lib/flatpak/exports/share:$PATH"
 
 # Disable the bell
 if [[ $iatest > 0 ]]; then bind "set bell-style visible"; fi
@@ -66,12 +66,10 @@ if [[ $iatest > 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest > 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-# export EDITOR=vim
-# export VISUAL=vim
-# alias pico='edit'
-# alias spico='sedit'
-# alias nano='edit'
-# alias snano='sedit'
+export EDITOR=vim
+export VISUAL=code          # code is vscode
+alias edit="subl"           # subl is sublime-text
+alias svim="sudo vim"
 
 # Color for manpages in less makes manpages a little easier to read
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -84,19 +82,23 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 
 
-#######################################################
+###############################################################
 # --------------	GENERAL ALIAS'S		--------------#
-#######################################################
+###############################################################
 
 # To temporarily bypass an alias, we preceed the command with a \
 # For example: the ls command is aliased, but to use the normal ls 
 # command you would type \ls
 
 
-# Update System & Cleanup
+## Update System & Cleanup
+#
 # Ubuntu
-alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt autoclean -y"
-
+# alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt autoclean -y"
+#
+# ArchLinux
+alias update="sudo pacman -Sy"
+alias upgrade="sudo pacman -Syu"
 
 # Add an "alert" alias for long running commands.  
 # Example: -> sleep 10; alert
@@ -110,8 +112,11 @@ alias wtw?='WhatToWatch'
 alias toss!='toss'
 
 # Alias's to modified commands
-alias ls="ls --color=auto -p --group-directories-first"
-alias ll="ls -lah --color=auto -p"
+#alias ls="ls --color=auto -p --group-directories-first"
+#alias ll="ls -lah --color=auto -p"
+alias ls="lsd -F --color=auto --group-directories-first"
+alias ll="lsd -lah --color=auto"
+alias cat="bat"
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -iv'
@@ -167,14 +172,26 @@ cpg () {
 	fi
 }
 
+# Custom Wifi commands with nmcli ( networkmanager )
+wifi-connect () {
+	nmcli con up $1
+}
 
+wifi-reconnect (){
+	nmcli con down $1
+	nmcli con up $1
+}
+
+wifi-disconnect () {
+	nmcli con down $1
+}
 
 #######################################################
 # ---------------   COMMAND PROMPT   -----------------#
 #######################################################
 
 # Greeter Section
-pfetch
+# pfetch
 
 # Set Colors
 bold="\e[1m";
