@@ -16,8 +16,18 @@ configs/claude/plugins/
 **/*token*
 **/*secret*
 
-# Claude context
+# Claude context files (local only)
 CLAUDE.md
+**/CLAUDE.md
+
+# Local scratch / analysis files
+PLAN.md
+hyprdots-analysis.md
+hyprdots/
+caelestia-shell/
+
+# Build artifacts
+plugin/build/
 
 # Misc
 .DS_Store

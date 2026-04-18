@@ -9,7 +9,23 @@
       "Bash(awk '{print $NF}')",
       "Bash(rm -rf utils)",
       "Bash(mkdir -p themes wallpapers assets/fonts assets/icons assets/cursors ui scripts)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git clone *)",
+      "WebFetch(domain:quickshell.org)",
+      "WebFetch(domain:git.outfoxxed.me)",
+      "WebSearch",
+      "Bash(cmake --version)",
+      "Bash(pkg-config --modversion Qt6Core)",
+      "Bash(qmake6 --version)",
+      "Bash(pkg-config --list-all)",
+      "Bash(chmod +x /home/mahrjose/Hub/Workshop/dotfiles/plugin/build.sh)",
+      "Bash(bash build.sh)",
+      "Bash(bash build.sh --clean)",
+      "Bash(swww query *)",
+      "Read(//usr/lib/qt6/qml/Quickshell/Services/Pipewire/**)",
+      "Read(//usr/lib/qt6/qml/Quickshell/Services/UPower/**)",
+      "Bash(pkill quickshell *)",
+      "Bash(python3 -c ' *)"
     ],
     "additionalDirectories": [
       "/home/mahrjose/.claude"

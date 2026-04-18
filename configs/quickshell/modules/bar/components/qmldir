@@ -1,0 +1,11 @@
+module bar.components
+ActiveWindow 1.0 ActiveWindow.qml
+Battery 1.0 Battery.qml
+Bluetooth 1.0 Bluetooth.qml
+Clock 1.0 Clock.qml
+MediaPlayer 1.0 MediaPlayer.qml
+Network 1.0 Network.qml
+PowerButton 1.0 PowerButton.qml
+SystemTray 1.0 SystemTray.qml
+Volume 1.0 Volume.qml
+Workspaces 1.0 Workspaces.qml

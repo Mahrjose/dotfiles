@@ -43,6 +43,11 @@ stow_pkg waybar    "$HOME/.config/waybar"
 stow_pkg dunst     "$HOME/.config/dunst"
 stow_pkg fastfetch "$HOME/.config/fastfetch"
 
+# Experimental — only stow if the config dir exists in repo
+[[ -d "$CONFIGS/quickshell" ]] && stow_pkg quickshell "$HOME/.config/quickshell"
+[[ -d "$CONFIGS/hyprlock"   ]] && stow_pkg hyprlock   "$HOME/.config/hyprlock"
+[[ -d "$CONFIGS/hypridle"   ]] && stow_pkg hypridle   "$HOME/.config/hypridle"
+
 if [[ "$PERSONAL" == true ]]; then
     echo ""
     echo "[ personal ]"
