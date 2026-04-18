@@ -1,0 +1,44 @@
+# Dotfiles Manifest
+# Maps each config package to its target path on the machine.
+# personal = true  → skip when deploying for others
+# stow = true      → use GNU Stow for symlinking (default)
+
+[hypr]
+source = "configs/hypr"
+target = "~/.config/hypr"
+personal = false
+
+[kitty]
+source = "configs/kitty"
+target = "~/.config/kitty"
+personal = false
+
+[waybar]
+source = "configs/waybar"
+target = "~/.config/waybar"
+personal = false
+
+[dunst]
+source = "configs/dunst"
+target = "~/.config/dunst"
+personal = false
+
+[fastfetch]
+source = "configs/fastfetch"
+target = "~/.config/fastfetch"
+personal = false
+
+[zsh]
+source = "configs/zsh"
+target = "~"
+personal = true
+
+[git]
+source = "configs/git"
+target = "~"
+personal = true
+
+[claude]
+source = "configs/claude"
+target = "~/.claude"
+personal = true
