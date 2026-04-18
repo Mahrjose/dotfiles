@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Usage: ./scripts/setup.sh [--personal] [--dry-run]
-#   --personal  also link personal configs (zsh, git, claude)
+# Usage: ./scripts/setup.sh [--personal] [--dry-run] [--relink]
+#   --personal  also link personal configs (zsh, claude)
 #   --dry-run   show what would be linked without doing it
+#   --relink    relink everything including personal (calls relink.sh)
 
 set -euo pipefail
 
@@ -14,6 +15,7 @@ for arg in "$@"; do
     case $arg in
         --personal) PERSONAL=true ;;
         --dry-run)  DRY=true ;;
+        --relink)   exec "$DOTFILES/scripts/relink.sh" ;;
     esac
 done
 
