@@ -35,19 +35,22 @@ echo "Setting up dotfiles from $DOTFILES"
 echo ""
 
 echo "[ configs ]"
-stow_pkg hypr     "$HOME/.config/hypr"
-stow_pkg kitty    "$HOME/.config/kitty"
-stow_pkg waybar   "$HOME/.config/waybar"
-stow_pkg dunst    "$HOME/.config/dunst"
+stow_pkg hypr      "$HOME/.config/hypr"
+stow_pkg kitty     "$HOME/.config/kitty"
+stow_pkg waybar    "$HOME/.config/waybar"
+stow_pkg dunst     "$HOME/.config/dunst"
 stow_pkg fastfetch "$HOME/.config/fastfetch"
 
 if [[ "$PERSONAL" == true ]]; then
     echo ""
     echo "[ personal ]"
     stow_pkg zsh    "$HOME"
-    stow_pkg git    "$HOME"
     stow_pkg claude "$HOME/.claude"
 fi
+
+# Save current dotfiles path so shell can detect if it moves
+mkdir -p "$HOME/.cache"
+echo "$DOTFILES" > "$HOME/.cache/dotfiles_path"
 
 echo ""
 echo "Done."
