@@ -27,7 +27,7 @@ source $ZSH/oh-my-zsh.sh
 # ------------------   EXPORTS   -------------------- #
 ########################################################
 
-export PATH="$HOME/.local/bin:$HOME/Hub/Core/Scripts:$PATH"
+export PATH="$HOME/.local/bin:$HOME/Hub/Workshop/dotfiles/scripts/personal:$PATH"
 
 export EDITOR=vim
 export VISUAL=code
