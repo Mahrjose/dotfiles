@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(env)",
+      "Bash(pacman -Qs nodejs)",
+      "Bash(npm --version)",
+      "Bash(npx playwright *)",
+      "Bash(npm uninstall *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(npm show *)",
+      "Bash(node -e \"const v=JSON.parse\\(require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\)\\); console.log\\(v.filter\\(x=>x.startsWith\\('15.'\\)\\).slice\\(-5\\).join\\('\\\\n'\\)\\)\")",
+      "Bash(node -e \"const v=JSON.parse\\(require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\)\\); const stable=v.filter\\(x=>!x.includes\\('canary'\\)&&!x.includes\\('beta'\\)&&!x.includes\\('rc'\\)&&x.startsWith\\('15.'\\)\\); console.log\\(stable.slice\\(-5\\).join\\('\\\\n'\\)\\)\")",
+      "Read(//home/mahrjose/Hub/Workshop/Portfolio/**)",
+      "Bash(npm search *)"
+    ]
+  },
+  "effortLevel": "low"
+}

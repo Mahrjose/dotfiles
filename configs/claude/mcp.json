@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    },
+    "excalidraw": {
+      "type": "http",
+      "url": "https://mcp.excalidraw.com/mcp"
+    }
+  }
+}
