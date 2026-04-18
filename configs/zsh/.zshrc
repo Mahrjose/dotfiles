@@ -24,31 +24,6 @@ source $ZSH/oh-my-zsh.sh
 
 
 ########################################################
-# -----------------   DOTFILES   -------------------- #
-########################################################
-
-# Relink symlinks if dotfiles repo was moved
-_dotfiles_check() {
-    local cache="$HOME/.cache/dotfiles_path"
-    [[ ! -f "$cache" ]] && return
-
-    local saved_path="$(cat "$cache")"
-    local setup="$saved_path/scripts/setup.sh"
-
-    # If saved path no longer exists, find new location by searching for setup.sh
-    if [[ ! -f "$setup" ]]; then
-        local new_path
-        new_path="$(find "$HOME" -maxdepth 6 -name "setup.sh" -path "*/scripts/setup.sh" 2>/dev/null | head -1 | xargs dirname | xargs dirname 2>/dev/null)"
-        if [[ -n "$new_path" && -f "$new_path/scripts/setup.sh" ]]; then
-            echo "Dotfiles moved to $new_path — relinking..."
-            bash "$new_path/scripts/setup.sh" --personal
-        fi
-    fi
-}
-_dotfiles_check
-
-
-########################################################
 # ------------------   EXPORTS   -------------------- #
 ########################################################
 
