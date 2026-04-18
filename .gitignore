@@ -16,6 +16,9 @@ configs/claude/plugins/
 **/*token*
 **/*secret*
 
+# Claude context
+CLAUDE.md
+
 # Misc
 .DS_Store
 *.swp
