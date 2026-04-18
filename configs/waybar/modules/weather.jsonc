@@ -1,0 +1,10 @@
+"custom/weather": {
+    "format": "{}",
+    "rotate": ${r_deg},
+    "exec": "/home/mahrjose/Hub/Workshop/NyxOS/scripts/weather/weather.sh --city Madhukhali",
+    "interval": 216000,
+    "tooltip": true,
+    "return-type": "json",
+    "on-click": "xdg-open https://weather.com/weather/today",
+    "on-click-right": "notify-send '⛅ Weather Updated'"
+},
