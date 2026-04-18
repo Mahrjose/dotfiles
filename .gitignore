@@ -1,9 +1,22 @@
-test/
-NyxDE/
-.vscode/
-test.sh
-commands.md
-.env
-temp/
-temp/*
-.venv
+# Claude - runtime/session data
+configs/claude/history.jsonl
+configs/claude/sessions/
+configs/claude/cache/
+configs/claude/debug/
+configs/claude/downloads/
+configs/claude/shell-snapshots/
+configs/claude/file-history/
+configs/claude/backups/
+configs/claude/ide/
+configs/claude/plugins/
+
+# Secrets (never commit)
+**/.env
+**/.credentials*
+**/*token*
+**/*secret*
+
+# Misc
+.DS_Store
+*.swp
+*.bak
