@@ -1,14 +1,166 @@
-# Oh-my-zsh installation path
-ZSH=/usr/share/oh-my-zsh/
 
-# Powerlevel10k theme path
+#  ███████╗███████╗██╗  ██╗██████╗  ██████╗
+#  ╚══███╔╝██╔════╝██║  ██║██╔══██╗██╔════╝
+#    ███╔╝ ███████╗███████║██████╔╝██║
+#   ███╔╝  ╚════██║██╔══██║██╔══██╗██║
+#  ███████╗███████║██║  ██║██║  ██║╚██████╗
+#  ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝
+#
+#  Author : Mirza Mahrab Hossain
+#  Github : https://github.com/mahrjose
+
+
+########################################################
+# ----------------   OH-MY-ZSH   -------------------- #
+########################################################
+
+ZSH=/usr/share/oh-my-zsh/
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
-# List of plugins used
 plugins=( git sudo zsh-256color zsh-autosuggestions zsh-syntax-highlighting )
 source $ZSH/oh-my-zsh.sh
 
-# In case a command is not found, try to find the package that has it
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+########################################################
+# ------------------   EXPORTS   -------------------- #
+########################################################
+
+export PATH="$HOME/.local/bin:$HOME/Hub/Core/Scripts:$PATH"
+
+export EDITOR=vim
+export VISUAL=code
+
+export HISTFILESIZE=10000
+export HISTSIZE=1000
+export HISTCONTROL=erasedups:ignoredups:ignorespace
+
+
+########################################################
+# ------------------   ALIASES   -------------------- #
+########################################################
+
+# -- General --
+alias c='clear'
+alias edit='subl'
+alias vi='vim'
+alias svi='sudo vim'
+alias svim='sudo vim'
+alias mkdir='mkdir -p'
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -iv'
+alias ping='ping -c 10'
+alias less='less -R'
+alias da='date "+%Y-%m-%d %A %T %Z"'
+
+# -- Listing --
+alias l='eza -lh --icons=auto'
+alias ls='eza -1 --icons=auto'
+alias ll='eza -lha --icons=auto --sort=name --group-directories-first'
+alias ld='eza -lhD --icons=auto'
+alias lt='eza --icons=auto --tree'
+
+# -- Navigation --
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+alias bd='cd "$OLDPWD"'
+alias home='cd ~'
+
+# -- Package Management --
+alias un='$aurhelper -Rns'
+alias up='$aurhelper -Syu'
+alias pl='$aurhelper -Qs'
+alias pa='$aurhelper -Ss'
+alias pc='$aurhelper -Sc'
+alias po='$aurhelper -Qtdq | $aurhelper -Rns -'
+alias update='sudo pacman -Sy'
+alias upgrade='sudo pacman -Syu'
+
+# -- Apps --
+alias vc='code'
+alias ssh='/home/mahrjose/Hub/Core/Scripts/ssh-modified.sh'
+alias bw='node --no-deprecation /usr/bin/bw'
+
+
+########################################################
+# -----------------   FUNCTIONS   ------------------- #
+########################################################
+
+# Create and enter a directory
+mkcd() {
+    mkdir -p "$1" && cd "$1" || echo "mkcd: failed to create or enter '$1'"
+}
+
+# Extract any archive format
+extract() {
+    if [ ! -f "$1" ]; then
+        echo "extract: '$1' is not a valid file"
+        return 1
+    fi
+    case "$1" in
+        *.tar.bz2) tar xjf "$1" ;;
+        *.tar.gz)  tar xzf "$1" ;;
+        *.tar.xz)  tar xf  "$1" ;;
+        *.zip)     unzip "$1" ;;
+        *.rar)     unrar x "$1" ;;
+        *.7z)      7z x "$1" ;;
+        *) echo "extract: unknown format '$1'" ;;
+    esac
+}
+
+# Display network info
+netinfo() {
+    echo "========== Network Information =========="
+    echo "IP Addresses:"
+    ip addr show | awk '/inet / {print $2}'
+    echo "-----------------------------------------"
+    echo "Default Gateway:"
+    ip route show default | awk '{print $3}'
+    echo "-----------------------------------------"
+    echo "DNS Servers:"
+    grep "nameserver" /etc/resolv.conf | awk '{print $2}'
+    echo "-----------------------------------------"
+    echo "Active Connections (top 10):"
+    ss -tunap | head -n 10
+    echo "========================================="
+}
+
+
+########################################################
+# ------------------   SYSTEM   --------------------- #
+########################################################
+
+# Detect AUR wrapper
+if pacman -Qi yay &>/dev/null; then
+    aurhelper="yay"
+elif pacman -Qi paru &>/dev/null; then
+    aurhelper="paru"
+fi
+
+# Install packages (auto-detect official vs AUR)
+function in {
+    local -a inPkg=("$@")
+    local -a arch=()
+    local -a aur=()
+
+    for pkg in "${inPkg[@]}"; do
+        if pacman -Si "${pkg}" &>/dev/null; then
+            arch+=("${pkg}")
+        else
+            aur+=("${pkg}")
+        fi
+    done
+
+    [[ ${#arch[@]} -gt 0 ]] && sudo pacman -S "${arch[@]}"
+    [[ ${#aur[@]} -gt 0 ]] && ${aurhelper} -S "${aur[@]}"
+}
+
+# Suggest package when command not found
 function command_not_found_handler {
     local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
     printf 'zsh: command not found: %s\n' "$1"
@@ -28,62 +180,37 @@ function command_not_found_handler {
     return 127
 }
 
-# Detect AUR wrapper
-if pacman -Qi yay &>/dev/null; then
-   aurhelper="yay"
-elif pacman -Qi paru &>/dev/null; then
-   aurhelper="paru"
-fi
 
-function in {
-    local -a inPkg=("$@")
-    local -a arch=()
-    local -a aur=()
+########################################################
+# -----------------   BITWARDEN   ------------------- #
+########################################################
 
-    for pkg in "${inPkg[@]}"; do
-        if pacman -Si "${pkg}" &>/dev/null; then
-            arch+=("${pkg}")
-        else
-            aur+=("${pkg}")
-        fi
-    done
+# Keep Bitwarden session alive across terminals
+_BW_SESSION_FILE="$HOME/.cache/bw_session"
+_BW_MASTER_FILE="$HOME/.cache/bw_master"
 
-    if [[ ${#arch[@]} -gt 0 ]]; then
-        sudo pacman -S "${arch[@]}"
+bw-unlock() {
+    local session
+    if [[ -f "$_BW_MASTER_FILE" ]]; then
+        session="$(BW_PASSWORD="$(cat "$_BW_MASTER_FILE")" node --no-deprecation /usr/bin/bw unlock --passwordenv BW_PASSWORD --raw 2>/dev/null)"
     fi
-
-    if [[ ${#aur[@]} -gt 0 ]]; then
-        ${aurhelper} -S "${aur[@]}"
+    if [[ -n "$session" ]]; then
+        export BW_SESSION="$session"
+        echo "$session" > "$_BW_SESSION_FILE"
+        chmod 600 "$_BW_SESSION_FILE"
     fi
 }
 
-# Helpful aliases
-alias c='clear' # clear terminal
-alias l='eza -lh --icons=auto' # long list
-alias ls='eza -1 --icons=auto' # short list
-alias ll='eza -lha --icons=auto --sort=name --group-directories-first' # long list all
-alias ld='eza -lhD --icons=auto' # long list dirs
-alias lt='eza --icons=auto --tree' # list folder as tree
-alias un='$aurhelper -Rns' # uninstall package
-alias up='$aurhelper -Syu' # update system/package/aur
-alias pl='$aurhelper -Qs' # list installed package
-alias pa='$aurhelper -Ss' # list available package
-alias pc='$aurhelper -Sc' # remove unused cache
-alias po='$aurhelper -Qtdq | $aurhelper -Rns -' # remove unused packages, also try > $aurhelper -Qqd | $aurhelper -Rsu --print -
-alias vc='code' # gui code editor
+# Load cached session - only unlock if no session file exists
+if [[ -f "$_BW_SESSION_FILE" ]]; then
+    export BW_SESSION="$(cat "$_BW_SESSION_FILE")"
+else
+    bw-unlock
+fi
 
-# Directory navigation shortcuts
-alias ..='cd ..'
-alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
 
-# Always mkdir a path (this doesn't inhibit functionality to make a single dir)
-alias mkdir='mkdir -p'
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+########################################################
+# -----------------   GREETING   -------------------- #
+########################################################
 
 fastfetch
-export PATH="$HOME/.local/bin:$PATH"
