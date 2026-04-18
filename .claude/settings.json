@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//home/mahrjose/.config/hypr/**)",
+      "Read(//home/mahrjose/.config/kitty/**)",
+      "Read(//home/mahrjose/.config/waybar/**)",
+      "Read(//home/mahrjose/.config/dunst/**)",
+      "Read(//home/mahrjose/**)",
+      "Bash(awk '{print $NF}')",
+      "Bash(rm -rf utils)",
+      "Bash(mkdir -p themes wallpapers assets/fonts assets/icons assets/cursors ui scripts)",
+      "Bash(git commit *)"
+    ],
+    "additionalDirectories": [
+      "/home/mahrjose/.claude"
+    ]
+  }
+}
